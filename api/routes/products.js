@@ -26,9 +26,9 @@ router.post('/', (req, res, next) => {
 	.save()
 	.then(result => {
 		res.status(201).json({
-		message:"posting products",
-		createdProduct: result
-	});
+			message:"posting products",
+			createdProduct: result
+		});
 	}).catch(err => 
 	res.status(500).json({
 		message: err
@@ -52,14 +52,55 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.patch('/:id', (req, res, next) => {
-	res.status(200).json({
-		message:"updating product"
-	});
+	const productId = req.params.id;
+	const updateOps = {};
+	for(const ops of req.body) {
+		updateOps[ops.propName] = ops.value;
+	}
+	Product.update({_id: productId},{ $set: updateOps})
+	.exec()
+	.then(result => {
+		if(result){
+			res.status(200).json({
+				message: "Product Updated",
+				info: result
+			});
+		}
+		else{
+			res.status(404).json({
+				message: "not found invalid Product"
+			});
+		}
+	})
+	.catch(err => {
+		res.status(500).json({
+			message: "Some error"
+		});
+	})
 });
 
 router.delete('/:id', (req, res, next) => {
-	res.status(200).json({
-		message:"delete product"
+	const productId = req.params.id;
+	Product.findOneAndRemove({_id: productId})
+	.exec()
+	.then(result => {
+		if(result){
+			res.status(200).json({
+				message:"product deleted",
+				info:result
+			});
+		}
+		else{
+			res.status(404).json({
+				message: "producat not found"
+			});
+		}
+	})
+	.catch(err => {
+		res.status(500).json({
+			no: "no",
+			message: err
+		});
 	});
 });
 
