@@ -5,10 +5,17 @@ const Product = require('../models/product');
 
 router.get('/', (req, res, next) => {
 	Product.find()
+	.select('name price _id')
 	.exec()
 	.then(doc => {
 		if(doc){res.status(200).json(doc);}
-		else{res.status(400).json({message: "Product Not found"})}
+		else{
+			const response = {
+				count: doc.length,
+				products: doc
+			}
+			res.status(400).json(response);
+		}
 	})
 	.catch(err => {
 		console.log(err);
