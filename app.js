@@ -7,6 +7,8 @@ const productsRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
 mongoose.connect('mongodb://node-shop-app:node-shop-app@node-rest-shop-shard-00-00-bv6tv.mongodb.net:27017,node-rest-shop-shard-00-01-bv6tv.mongodb.net:27017,node-rest-shop-shard-00-02-bv6tv.mongodb.net:27017/test?ssl=true&replicaSet=node-rest-shop-shard-0&authSource=admin&retryWrites=true');
 
+
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
