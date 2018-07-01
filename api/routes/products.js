@@ -37,7 +37,7 @@ router.get('/', (req, res, next) => {
 			products: doc.map(doc => {
 				return {
 					name: doc.name,
-					rice: doc.price,
+					price: doc.price,
 					productImage: doc.productImage,
 					_id: doc._id,
 					request: {

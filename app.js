@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 
 const productsRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
+const usersRoutes = require('./api/routes/users');                                                               
+
 mongoose.connect('mongodb://node-shop-app:node-shop-app@node-rest-shop-shard-00-00-bv6tv.mongodb.net:27017,node-rest-shop-shard-00-01-bv6tv.mongodb.net:27017,node-rest-shop-shard-00-02-bv6tv.mongodb.net:27017/test?ssl=true&replicaSet=node-rest-shop-shard-0&authSource=admin&retryWrites=true');
 
 
@@ -14,6 +16,7 @@ app.use(bodyParser.json());
 
 app.use('/products', productsRoutes);
 app.use('/orders', ordersRoutes);
+app.use('/users', usersRoutes)
 
 app.use((req, res, next) => {
 	const e = new Error('Yaar Not Found');
